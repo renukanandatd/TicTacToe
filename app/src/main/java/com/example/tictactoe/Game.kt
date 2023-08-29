@@ -1,6 +1,7 @@
 package com.example.tictactoe
 
 import java.lang.Exception
+import kotlin.random.Random
 
 var board = ArrayList<ArrayList<String>>()
 fun main(){
@@ -31,7 +32,7 @@ fun main(){
             }
             else{
                 board[x-1][y-1]="X"
-                printBoard()
+                //printBoard()
             }
             if(!skipRound){
                 val playerWon=checkWinner(true)
@@ -43,6 +44,15 @@ fun main(){
                 if(!playerWon&&boardFull){
                     print("It's a tie")
                     continueGame=false
+                }
+                if(continueGame){
+                    placeComputerMove()
+                    printBoard()
+                    var computerWon= checkWinner(false)
+                    if(computerWon){
+                        print("Computer won")
+                        continueGame=false
+                    }
                 }
             }
         }catch (e:Exception){
@@ -96,4 +106,14 @@ fun boardFull():Boolean{
         }
     }
     return bFull
+}
+
+fun placeComputerMove(){
+    var i=0
+    var j=0
+    do {
+        i= Random.nextInt(3)
+        j=Random.nextInt(3)
+    }while(board[i][j]!="")
+    board[i][j]="0"
 }
